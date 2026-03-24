@@ -86,6 +86,14 @@ class TGS_Login_Page_Customizer {
     }
 
     /**
+     * Check if BizCity Twin AI plugin is active and modifying login page
+     * @return bool
+     */
+    private function is_bizcity_login_active() {
+        return class_exists('BizCity_Login_Page');
+    }
+
+    /**
      * Enqueue custom login styles
      */
     public function enqueue_login_styles() {
@@ -179,18 +187,19 @@ class TGS_Login_Page_Customizer {
         $title = $this->settings->get('text.login_title', '');
         $subtitle = $this->settings->get('text.login_subtitle', '');
         $auto_login = $this->settings->get('auto_login', array());
+        $bizcity = $this->is_bizcity_login_active();
 
         $html = '';
 
-        // Custom title
-        if (!empty($title)) {
+        // Custom title — skip when BizCity active (it has its own welcome text)
+        if (!empty($title) && !$bizcity) {
             $title_color = $this->settings->get('text.title_color', '#333333');
             $title_size = $this->settings->get('text.title_font_size', '22');
             $html .= '<h2 class="tgs-login-title" style="text-align:center;color:' . esc_attr($title_color) . ';font-size:' . esc_attr($title_size) . 'px;margin:0 0 8px 0;font-weight:600;">' . esc_html($title) . '</h2>';
         }
 
-        // Custom subtitle
-        if (!empty($subtitle)) {
+        // Custom subtitle — skip when BizCity active
+        if (!empty($subtitle) && !$bizcity) {
             $sub_color = $this->settings->get('text.subtitle_color', '#666666');
             $sub_size = $this->settings->get('text.subtitle_font_size', '14');
             $html .= '<p class="tgs-login-subtitle" style="text-align:center;color:' . esc_attr($sub_color) . ';font-size:' . esc_attr($sub_size) . 'px;margin:0 0 15px 0;">' . esc_html($subtitle) . '</p>';
@@ -242,6 +251,9 @@ class TGS_Login_Page_Customizer {
      */
     public function login_footer_content() {
         if (!$this->is_enabled()) return;
+
+        // BizCity has its own footer — skip to avoid duplicate
+        if ($this->is_bizcity_login_active()) return;
 
         $footer_text = $this->settings->get('text.footer_text', '');
         if (!empty($footer_text)) {
@@ -300,6 +312,9 @@ class TGS_Login_Page_Customizer {
     public function add_background_overlay() {
         if (!$this->is_enabled()) return;
 
+        // BizCity handles its own background — skip overlay
+        if ($this->is_bizcity_login_active()) return;
+
         $overlay = $this->settings->get('background.overlay_enabled', false);
         if ($overlay) {
             $overlay_color = $this->settings->get('background.overlay_color', 'rgba(0,0,0,0.3)');
@@ -344,6 +359,12 @@ class TGS_Login_Page_Customizer {
      */
     private function generate_login_css() {
         $s = $this->settings;
+
+        // BizCity Twin AI compatibility: return adapted CSS
+        if ($this->is_bizcity_login_active()) {
+            return $this->generate_bizcity_compat_css();
+        }
+
         $css = '';
 
         // === FONT FAMILY ===
@@ -531,6 +552,89 @@ class TGS_Login_Page_Customizer {
         $css .= "}\n";
 
         // === CUSTOM CSS ===
+        $custom_css = $s->get('custom_css', '');
+        if (!empty($custom_css)) {
+            $css .= "\n/* Custom CSS */\n" . $custom_css . "\n";
+        }
+
+        return $css;
+    }
+
+    /**
+     * Generate CSS compatible with BizCity Twin AI login layout
+     * 
+     * BizCity uses a two-column layout (form left, hero image right).
+     * This method outputs CSS that works WITHIN that layout instead of
+     * conflicting with it. Only colors, fonts, and minor tweaks are applied.
+     * 
+     * @return string
+     */
+    private function generate_bizcity_compat_css() {
+        $s = $this->settings;
+        $css = "/* TGS Login Customizer — BizCity Twin AI Compatibility Mode */\n\n";
+
+        // ── Font family (non-conflicting, enhances) ──
+        $font = $s->get('layout.page_font_family', '');
+        if (!empty($font)) {
+            $css .= "body.login, .login form, .login label, .login input,\n";
+            $css .= ".aiquill-welcome h2, .aiquill-welcome p, .aiquill-footer {\n";
+            $css .= "  font-family: '{$font}', sans-serif !important;\n";
+            $css .= "}\n\n";
+        }
+
+        // ── Input field focus color ──
+        $css .= "#loginform input[type='text']:focus,\n";
+        $css .= "#loginform input[type='password']:focus,\n";
+        $css .= "#loginform input[type='email']:focus {\n";
+        $css .= "  border-color: " . esc_attr($s->get('input.focus_border_color', 'rgb(77,107,254)')) . " !important;\n";
+        $css .= "  box-shadow: 0 0 0 1px " . esc_attr($s->get('input.focus_border_color', 'rgb(77,107,254)')) . " !important;\n";
+        $css .= "}\n\n";
+
+        // ── Labels & input text: let BizCity dark mode handle colors ──
+        // Only set font-size/weight, NOT color (so dark mode works)
+        $css .= ".login label {\n";
+        $css .= "  font-size: " . esc_attr($s->get('label.font_size', '14')) . "px !important;\n";
+        $css .= "  font-weight: " . esc_attr($s->get('label.font_weight', '500')) . " !important;\n";
+        $css .= "}\n\n";
+
+        // ── Button colors (keep BizCity pill shape + full-width) ──
+        $css .= "#wp-submit,\n";
+        $css .= ".login .button-primary {\n";
+        $css .= "  background: " . esc_attr($s->get('button.background_color', 'rgb(77,107,254)')) . " !important;\n";
+        $css .= "  color: " . esc_attr($s->get('button.text_color', '#ffffff')) . " !important;\n";
+        $css .= "  font-size: " . esc_attr($s->get('button.font_size', '14')) . "px !important;\n";
+        $css .= "  font-weight: " . esc_attr($s->get('button.font_weight', '500')) . " !important;\n";
+        $css .= "  text-transform: " . esc_attr($s->get('button.text_transform', 'none')) . " !important;\n";
+        $css .= "}\n";
+
+        $css .= "#wp-submit:hover,\n";
+        $css .= ".login .button-primary:hover {\n";
+        $css .= "  background: " . esc_attr($s->get('button.hover_background_color', 'rgb(77,107,254)')) . " !important;\n";
+        $css .= "  color: " . esc_attr($s->get('button.hover_text_color', '#ffffff')) . " !important;\n";
+        $css .= "  opacity: 0.9;\n";
+        $css .= "}\n\n";
+
+        // ── Error messages (use BizCity rounded style, allow color customization) ──
+        $css .= ".login #login_error {\n";
+        $css .= "  background: " . esc_attr($s->get('error.background_color', 'rgba(255,86,48,.08)')) . " !important;\n";
+        $css .= "  color: " . esc_attr($s->get('error.text_color', 'rgb(255,86,48)')) . " !important;\n";
+        $css .= "}\n\n";
+
+        // ── TGS injected elements — styled to fit BizCity layout ──
+        $css .= ".tgs-login-credentials {\n";
+        $css .= "  max-width: 480px;\n";
+        $css .= "  border-radius: 12px !important;\n";
+        $css .= "  border: 1px solid #EBECED !important;\n";
+        $css .= "  background: rgba(77,107,254,.05) !important;\n";
+        $css .= "  margin: 12px 0 !important;\n";
+        $css .= "}\n\n";
+
+        $css .= "#tgs-auto-login-countdown {\n";
+        $css .= "  max-width: 480px;\n";
+        $css .= "  border-radius: 12px !important;\n";
+        $css .= "}\n\n";
+
+        // ── Custom CSS (always applied last) ──
         $custom_css = $s->get('custom_css', '');
         if (!empty($custom_css)) {
             $css .= "\n/* Custom CSS */\n" . $custom_css . "\n";
