@@ -1,0 +1,563 @@
+/**
+ * TGS Login Customizer - Admin Styles
+ * 
+ * @package TGS_Login_Customizer
+ * @since 1.0.0
+ */
+
+/* ========================================
+   LAYOUT
+   ======================================== */
+.tgs-login-admin-wrap {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 0 20px;
+}
+
+.tgs-login-admin-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    padding: 15px 20px;
+    background: #fff;
+    border: 1px solid #c3c4c7;
+    border-left: 4px solid #2271b1;
+    border-radius: 4px;
+}
+
+.tgs-login-admin-header h1 {
+    margin: 0;
+    font-size: 23px;
+    font-weight: 400;
+    line-height: 1.3;
+}
+
+.tgs-login-admin-header .header-actions {
+    display: flex;
+    gap: 8px;
+}
+
+/* ========================================
+   TABS
+   ======================================== */
+.tgs-login-tabs {
+    display: flex;
+    border-bottom: 1px solid #c3c4c7;
+    margin-bottom: 0;
+    background: #fff;
+    padding: 0 10px;
+    flex-wrap: wrap;
+}
+
+.tgs-login-tab {
+    padding: 10px 16px;
+    cursor: pointer;
+    border: 1px solid transparent;
+    border-bottom: none;
+    margin-bottom: -1px;
+    font-size: 13px;
+    font-weight: 500;
+    color: #50575e;
+    background: transparent;
+    transition: all 0.2s;
+    white-space: nowrap;
+}
+
+.tgs-login-tab:hover {
+    color: #2271b1;
+    background: #f0f6fc;
+}
+
+.tgs-login-tab.active {
+    background: #fff;
+    border-color: #c3c4c7;
+    color: #1d2327;
+    font-weight: 600;
+    border-bottom-color: #fff;
+}
+
+.tgs-login-tab .dashicons {
+    font-size: 16px;
+    width: 16px;
+    height: 16px;
+    margin-right: 4px;
+    vertical-align: text-bottom;
+}
+
+/* ========================================
+   TAB CONTENT
+   ======================================== */
+.tgs-login-tab-content {
+    display: none;
+    background: #fff;
+    border: 1px solid #c3c4c7;
+    border-top: none;
+    padding: 20px;
+}
+
+.tgs-login-tab-content.active {
+    display: block;
+}
+
+/* ========================================
+   SECTIONS
+   ======================================== */
+.tgs-section {
+    margin-bottom: 25px;
+    padding-bottom: 25px;
+    border-bottom: 1px solid #eee;
+}
+
+.tgs-section:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.tgs-section-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: #1d2327;
+    margin: 0 0 15px 0;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #2271b1;
+    display: inline-block;
+}
+
+/* ========================================
+   FORM FIELDS
+   ======================================== */
+.tgs-field-row {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 15px;
+    gap: 15px;
+}
+
+.tgs-field-row .tgs-field-label {
+    flex: 0 0 200px;
+    font-weight: 500;
+    color: #1d2327;
+    padding-top: 7px;
+    font-size: 13px;
+}
+
+.tgs-field-row .tgs-field-control {
+    flex: 1;
+}
+
+.tgs-field-row .tgs-field-desc {
+    color: #787c82;
+    font-size: 12px;
+    margin-top: 4px;
+    line-height: 1.5;
+}
+
+.tgs-field-row input[type="text"],
+.tgs-field-row input[type="number"],
+.tgs-field-row input[type="url"],
+.tgs-field-row input[type="password"],
+.tgs-field-row input[type="email"],
+.tgs-field-row select,
+.tgs-field-row textarea {
+    max-width: 400px;
+    width: 100%;
+}
+
+.tgs-field-row textarea {
+    min-height: 100px;
+    font-family: monospace;
+    font-size: 12px;
+}
+
+.tgs-field-inline {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.tgs-field-inline input[type="number"] {
+    width: 80px !important;
+    max-width: 80px !important;
+}
+
+.tgs-field-inline .unit {
+    color: #787c82;
+    font-size: 12px;
+}
+
+/* ========================================
+   TOGGLE SWITCH
+   ======================================== */
+.tgs-toggle {
+    position: relative;
+    display: inline-block;
+    width: 44px;
+    height: 24px;
+}
+
+.tgs-toggle input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.tgs-toggle-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: 0.3s;
+    border-radius: 24px;
+}
+
+.tgs-toggle-slider:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    bottom: 3px;
+    background-color: #fff;
+    transition: 0.3s;
+    border-radius: 50%;
+}
+
+.tgs-toggle input:checked + .tgs-toggle-slider {
+    background-color: #2271b1;
+}
+
+.tgs-toggle input:checked + .tgs-toggle-slider:before {
+    transform: translateX(20px);
+}
+
+/* ========================================
+   IMAGE UPLOAD
+   ======================================== */
+.tgs-image-upload {
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+}
+
+.tgs-image-preview {
+    width: 200px;
+    min-height: 80px;
+    border: 2px dashed #c3c4c7;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: #f9f9f9;
+}
+
+.tgs-image-preview img {
+    max-width: 100%;
+    max-height: 150px;
+    display: block;
+}
+
+.tgs-image-preview .no-image {
+    color: #a0a5aa;
+    font-size: 12px;
+    text-align: center;
+    padding: 20px;
+}
+
+.tgs-image-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+/* ========================================
+   COLOR PICKER
+   ======================================== */
+.tgs-color-field {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.tgs-color-field .wp-color-picker {
+    width: 100px !important;
+}
+
+/* ========================================
+   PREVIEW IFRAME
+   ======================================== */
+.tgs-preview-container {
+    position: relative;
+    border: 2px solid #c3c4c7;
+    border-radius: 4px;
+    overflow: hidden;
+    background: #f0f0f1;
+}
+
+.tgs-preview-container iframe {
+    width: 100%;
+    height: 600px;
+    border: none;
+}
+
+.tgs-preview-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 12px;
+    background: #23282d;
+    color: #fff;
+}
+
+.tgs-preview-toolbar .preview-label {
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.tgs-preview-toolbar .preview-actions {
+    display: flex;
+    gap: 8px;
+}
+
+/* ========================================
+   IMPORT/EXPORT
+   ======================================== */
+.tgs-import-export-area {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.tgs-import-box,
+.tgs-export-box {
+    border: 1px solid #c3c4c7;
+    border-radius: 4px;
+    padding: 20px;
+    background: #f9f9f9;
+}
+
+.tgs-import-box h3,
+.tgs-export-box h3 {
+    margin-top: 0;
+    font-size: 14px;
+    color: #1d2327;
+}
+
+.tgs-import-box textarea,
+.tgs-export-box textarea {
+    width: 100%;
+    max-width: 100%;
+    min-height: 200px;
+    font-family: monospace;
+    font-size: 11px;
+}
+
+/* ========================================
+   BUTTONS
+   ======================================== */
+.tgs-btn-group {
+    display: flex;
+    gap: 8px;
+    margin-top: 15px;
+}
+
+.tgs-btn-save {
+    background: #2271b1 !important;
+    border-color: #2271b1 !important;
+    color: #fff !important;
+    font-size: 13px !important;
+    padding: 6px 20px !important;
+    height: auto !important;
+}
+
+.tgs-btn-save:hover {
+    background: #135e96 !important;
+}
+
+.tgs-btn-reset {
+    color: #d63638 !important;
+    border-color: #d63638 !important;
+}
+
+.tgs-btn-reset:hover {
+    background: #d63638 !important;
+    color: #fff !important;
+}
+
+/* ========================================
+   TOAST NOTIFICATIONS
+   ======================================== */
+.tgs-toast {
+    position: fixed;
+    top: 40px;
+    right: 20px;
+    z-index: 999999;
+    padding: 12px 20px;
+    border-radius: 4px;
+    font-size: 13px;
+    font-weight: 500;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    opacity: 0;
+    transform: translateX(100px);
+    transition: all 0.3s ease;
+    max-width: 400px;
+}
+
+.tgs-toast.show {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.tgs-toast.success {
+    background: #00a32a;
+    color: #fff;
+}
+
+.tgs-toast.error {
+    background: #d63638;
+    color: #fff;
+}
+
+.tgs-toast.info {
+    background: #2271b1;
+    color: #fff;
+}
+
+/* ========================================
+   RESPONSIVE
+   ======================================== */
+@media (max-width: 782px) {
+    .tgs-field-row {
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .tgs-field-row .tgs-field-label {
+        flex: none;
+        padding-top: 0;
+    }
+
+    .tgs-import-export-area {
+        grid-template-columns: 1fr;
+    }
+
+    .tgs-login-admin-header {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .tgs-login-tabs {
+        overflow-x: auto;
+    }
+}
+
+/* ========================================
+   CONDITIONAL FIELDS
+   ======================================== */
+.tgs-conditional {
+    transition: all 0.3s;
+}
+
+.tgs-conditional.hidden {
+    display: none !important;
+}
+
+/* ========================================
+   STATUS BADGES
+   ======================================== */
+.tgs-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 1.5;
+}
+
+.tgs-badge-success {
+    background: #d4edda;
+    color: #155724;
+}
+
+.tgs-badge-warning {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.tgs-badge-danger {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+.tgs-badge-info {
+    background: #d1ecf1;
+    color: #0c5460;
+}
+
+/* ========================================
+   INFO BOX
+   ======================================== */
+.tgs-info-box {
+    padding: 12px 16px;
+    border-left: 4px solid #2271b1;
+    background: #f0f6fc;
+    margin-bottom: 15px;
+    border-radius: 0 4px 4px 0;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.tgs-info-box.warning {
+    border-left-color: #dba617;
+    background: #fcf9e8;
+}
+
+.tgs-info-box.danger {
+    border-left-color: #d63638;
+    background: #fcf0f1;
+}
+
+/* ========================================
+   GRID LAYOUT FOR COLOR FIELDS
+   ======================================== */
+.tgs-color-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.tgs-color-grid .tgs-field-row {
+    margin-bottom: 0;
+}
+
+@media (max-width: 782px) {
+    .tgs-color-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ========================================
+   STICKY FOOTER BAR
+   ======================================== */
+.tgs-sticky-footer {
+    position: sticky;
+    bottom: 0;
+    background: #fff;
+    border-top: 1px solid #c3c4c7;
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 100;
+    box-shadow: 0 -2px 5px rgba(0,0,0,0.05);
+}
+
+.tgs-sticky-footer .tgs-save-status {
+    font-size: 13px;
+    color: #787c82;
+}
